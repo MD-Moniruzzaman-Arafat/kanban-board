@@ -1,12 +1,57 @@
+import { useState } from 'react';
+import useAllTask from '../../hooks/useAllTask';
 import useModal from '../../hooks/useModal';
 
 export default function TaskForm() {
-  const { showModal, setShowModal } = useModal();
+  const { setShowModal } = useModal();
+  const { state, dispatch } = useAllTask();
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    tag: '',
+    date: '',
+    status: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (
+      formData.title &&
+      formData.description &&
+      formData.tag &&
+      formData.date &&
+      formData.status
+    ) {
+      console.log(formData);
+      dispatch({ type: 'addTask', payload: formData });
+
+      // reset form
+      setFormData({
+        title: '',
+        description: '',
+        tag: '',
+        date: '',
+        status: '',
+      });
+
+      // close modal
+      setShowModal(false);
+    }
+  };
 
   return (
     <>
-      <div class="bg-white border min-w-2xl border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8 absolute z-50 top-1/5 right-2/6">
-        <form class="space-y-8">
+      <div class="bg-white border lg:min-w-2xl border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8 absolute z-50 top-1/5 right-1/12 lg:right-2/6">
+        <form onSubmit={handleSubmit} class="space-y-8">
           <div class="grid grid-cols-1 gap-6">
             <div>
               <label
@@ -16,6 +61,8 @@ export default function TaskForm() {
                 Task Title
               </label>
               <input
+                onChange={handleChange}
+                value={formData.title}
                 type="text"
                 id="title"
                 name="title"
@@ -33,10 +80,13 @@ export default function TaskForm() {
                 Task Subtitle / Description
               </label>
               <input
+                onChange={handleChange}
+                value={formData.description}
                 id="description"
                 name="description"
                 placeholder="Add context or acceptance criteria"
                 class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-900 focus:outline-none"
+                required
               />
             </div>
           </div>
@@ -47,10 +97,16 @@ export default function TaskForm() {
                 Tag
               </label>
               <select
+                required
+                onChange={handleChange}
+                value={formData.tag}
                 id="tag"
                 name="tag"
                 class="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 focus:border-gray-900 focus:outline-none"
               >
+                <option value={''} disabled>
+                  Select tag
+                </option>
                 <option value="design">Design</option>
                 <option value="operations">Operations</option>
                 <option value="marketing">Marketing</option>
@@ -68,6 +124,9 @@ export default function TaskForm() {
                 Due Date
               </label>
               <input
+                required
+                onChange={handleChange}
+                value={formData.date}
                 type="date"
                 id="date"
                 name="date"
@@ -83,10 +142,16 @@ export default function TaskForm() {
                 Status
               </label>
               <select
+                required
+                onChange={handleChange}
+                value={formData.status}
                 id="status"
                 name="status"
                 class="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 focus:border-gray-900 focus:outline-none"
               >
+                <option value={''} disabled>
+                  Select status
+                </option>
                 <option value="todo">To-do</option>
                 <option value="in-progress">In Progress</option>
                 <option value="done">Done</option>
