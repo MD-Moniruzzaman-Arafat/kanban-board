@@ -105,6 +105,9 @@ export default function Card({ data }) {
                   Edit Card
                 </button>
                 <button
+                  onClick={() => {
+                    dispatch({ type: 'deleteTask', payload: data.id });
+                  }}
                   type="button"
                   class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
                 >

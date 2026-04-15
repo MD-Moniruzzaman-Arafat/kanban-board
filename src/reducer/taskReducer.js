@@ -42,5 +42,11 @@ export const taskReducer = (state, action) => {
           return e;
         }),
       };
+
+    case 'deleteTask':
+      return {
+        ...state,
+        allTask: state.allTask.filter((e) => e.id !== action.payload),
+      };
   }
 };
