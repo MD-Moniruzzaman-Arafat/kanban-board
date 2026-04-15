@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { AllTaskContext } from '../context';
-import { initialState, taskReducer } from '../utils';
+import { initialState, taskReducer } from '../reducer/taskReducer';
 
 export default function AllTaskProvider({ children }) {
   const [state, dispatch] = useReducer(taskReducer, initialState);

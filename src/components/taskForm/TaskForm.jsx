@@ -6,6 +6,7 @@ export default function TaskForm() {
   const { setShowModal } = useModal();
   const { state, dispatch } = useAllTask();
   const [formData, setFormData] = useState({
+    id: '',
     title: '',
     description: '',
     tag: '',
@@ -18,6 +19,7 @@ export default function TaskForm() {
     setFormData({
       ...formData,
       [name]: value,
+      id: state.allTask.length + 1,
     });
   };
 
@@ -50,7 +52,7 @@ export default function TaskForm() {
 
   return (
     <>
-      <div class="bg-white border lg:min-w-2xl border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8 absolute z-50 top-1/5 right-1/12 lg:right-2/6">
+      <div class="bg-white border lg:min-w-2xl border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8 absolute z-50 top-1/5 right-1/12 lg:right-1/4 lg:left-1/4 ">
         <form onSubmit={handleSubmit} class="space-y-8">
           <div class="grid grid-cols-1 gap-6">
             <div>
