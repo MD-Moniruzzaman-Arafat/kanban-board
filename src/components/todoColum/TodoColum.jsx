@@ -142,9 +142,13 @@ export default function TodoColum() {
 
         <div class="space-y-4 flex-1 overflow-visible lg:overflow-y-auto">
           {/* <!-- Card 1 --> */}
-          {todo.map((d) => (
-            <Card key={d.id} data={d} />
-          ))}
+          {todo.length > 0 ? (
+            todo.map((d) => <Card key={d.id} data={d} />)
+          ) : (
+            <p className="text-center border border-gray-300 rounded-sm py-10 shadow-sm italic">
+              Not Fount
+            </p>
+          )}
         </div>
       </div>
     </>

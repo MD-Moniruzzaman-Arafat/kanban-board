@@ -6,7 +6,7 @@ import { formatDate } from '../../utils';
 
 export default function Card({ data }) {
   const { setShowModal } = useModal();
-  const { editData, setEditData } = useEditTask();
+  const { setEditData } = useEditTask();
   const { dispatch } = useAllTask();
   const [btnToggle, setBtnToggle] = useState(false);
 

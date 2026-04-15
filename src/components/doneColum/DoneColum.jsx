@@ -138,9 +138,13 @@ export default function DoneColum() {
         </div>
         <div class="space-y-4 flex-1 overflow-visible lg:overflow-y-auto">
           {/* <!-- Card 1 --> */}
-          {done.map((d) => (
-            <Card key={d.id} data={d} />
-          ))}
+          {done.length > 0 ? (
+            done.map((d) => <Card key={d.id} data={d} />)
+          ) : (
+            <p className="text-center border border-gray-300 rounded-sm py-10 shadow-sm italic">
+              Not Fount
+            </p>
+          )}
         </div>
       </div>
     </>

@@ -6,7 +6,7 @@ import useModal from '../../hooks/useModal';
 export default function TaskForm() {
   const { setShowModal } = useModal();
   const { editData, setEditData } = useEditTask();
-  const { state, dispatch } = useAllTask();
+  const { dispatch } = useAllTask();
   const [formData, setFormData] = useState(
     editData || {
       id: '',
