@@ -1,25 +1,28 @@
 import { useState } from 'react';
 import useAllTask from '../../hooks/useAllTask';
+import useEditTask from '../../hooks/useEditTask';
 import useModal from '../../hooks/useModal';
 
 export default function TaskForm() {
   const { setShowModal } = useModal();
+  const { editData, setEditData } = useEditTask();
   const { state, dispatch } = useAllTask();
-  const [formData, setFormData] = useState({
-    id: '',
-    title: '',
-    description: '',
-    tag: '',
-    date: '',
-    status: '',
-  });
+  const [formData, setFormData] = useState(
+    editData || {
+      id: '',
+      title: '',
+      description: '',
+      tag: '',
+      date: '',
+      status: '',
+    }
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-      id: state.allTask.length + 1,
     });
   };
 
@@ -34,7 +37,14 @@ export default function TaskForm() {
       formData.status
     ) {
       console.log(formData);
-      dispatch({ type: 'addTask', payload: formData });
+      if (editData) {
+        dispatch({
+          type: 'editTask',
+          payload: formData,
+        });
+      } else {
+        dispatch({ type: 'addTask', payload: { ...formData, id: Date.now() } });
+      }
 
       // reset form
       setFormData({
@@ -163,17 +173,29 @@ export default function TaskForm() {
 
           <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <a
-              onClick={() => setShowModal(false)}
+              onClick={() => {
+                (setShowModal(false), setEditData(''));
+              }}
               class="inline-flex items-center justify-center rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
             >
               Cancel
             </a>
-            <button
-              type="submit"
-              class="inline-flex items-center justify-center rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 cursor-pointer"
-            >
-              Add Task
-            </button>
+
+            {editData ? (
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 cursor-pointer"
+              >
+                Edit Task
+              </button>
+            ) : (
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 cursor-pointer"
+              >
+                Add Task
+              </button>
+            )}
           </div>
         </form>
       </div>

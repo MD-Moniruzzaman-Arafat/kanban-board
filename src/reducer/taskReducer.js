@@ -48,5 +48,16 @@ export const taskReducer = (state, action) => {
         ...state,
         allTask: state.allTask.filter((e) => e.id !== action.payload),
       };
+
+    case 'editTask':
+      return {
+        ...state,
+        allTask: state.allTask.map((d) => {
+          if (d.id === action.payload.id) {
+            return { ...d, ...action.payload };
+          }
+          return d;
+        }),
+      };
   }
 };

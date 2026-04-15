@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import useAllTask from '../../hooks/useAllTask';
+import useEditTask from '../../hooks/useEditTask';
+import useModal from '../../hooks/useModal';
 import { formatDate } from '../../utils';
 
 export default function Card({ data }) {
-  const [btnToggle, setBtnToggle] = useState(false);
+  const { setShowModal } = useModal();
+  const { editData, setEditData } = useEditTask();
   const { dispatch } = useAllTask();
+  const [btnToggle, setBtnToggle] = useState(false);
+
   return (
     <>
       <div
@@ -99,6 +104,11 @@ export default function Card({ data }) {
 
               <div class="border-t border-gray-100 mt-2 pt-2 space-y-1">
                 <button
+                  onClick={() => {
+                    (setShowModal(true),
+                      setBtnToggle(false),
+                      setEditData(data));
+                  }}
                   type="button"
                   class="w-full text-left px-4 py-2 hover:bg-gray-50"
                 >
