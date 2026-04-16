@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import useAllTask from '../../hooks/useAllTask';
+import useSearch from '../../hooks/useSearch';
 import { getData, getFilterData } from '../../utils';
 import Card from '../card/Card';
 
 export default function TodoColum() {
   const { state } = useAllTask();
+  const { searchItem } = useSearch();
   const [sortBtnToggle, setSortBtnToggle] = useState(false);
   const [filterBtnToggle, setFilterBtnToggle] = useState(false);
   const [sortData, setSortData] = useState('');
   const [tagData, setTagData] = useState('');
   const todoTag = getFilterData(state.allTask, 'todo', tagData);
-  const todo = getData(state.allTask, 'todo', tagData, sortData);
+  const todo = getData(state.allTask, 'todo', tagData, sortData, searchItem);
   console.log(todo);
   return (
     <>

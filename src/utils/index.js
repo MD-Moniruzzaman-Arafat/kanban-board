@@ -1,7 +1,15 @@
-export const getData = (data, status, tag, sort) => {
+export const getData = (data, status, tag, sort, search) => {
   const result = data.filter((e) => e.status === status);
 
-  const filter = tag === '' ? result : result.filter((e) => e.tag === tag);
+  const searchData =
+    search === ''
+      ? result
+      : result.filter((e) =>
+          e.title.toLowerCase().includes(search.toLowerCase())
+        );
+
+  const filter =
+    tag === '' ? searchData : searchData.filter((e) => e.tag === tag);
 
   return filter.sort((a, b) => {
     if (sort === 'desc') {
@@ -16,7 +24,9 @@ export const getFilterData = (data, status) => {
   console.log(status);
   const result = data.filter((e) => e.status === status);
 
-  return result;
+  const unique = [...new Map(result.map((item) => [item.tag, item])).values()];
+
+  return unique;
 };
 
 export const formatDate = (date) => {

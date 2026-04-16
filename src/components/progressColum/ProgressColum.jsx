@@ -1,16 +1,24 @@
 import { useState } from 'react';
 import useAllTask from '../../hooks/useAllTask';
+import useSearch from '../../hooks/useSearch';
 import { getData, getFilterData } from '../../utils';
 import Card from '../card/Card';
 
 export default function ProgressColum() {
   const { state } = useAllTask();
+  const { searchItem } = useSearch();
   const [sortBtnToggle, setSortBtnToggle] = useState(false);
   const [filterBtnToggle, setFilterBtnToggle] = useState(false);
   const [sortData, setSortData] = useState('');
   const [tagData, setTagData] = useState('');
   const inProgressTag = getFilterData(state.allTask, 'in-progress', tagData);
-  const inProgress = getData(state.allTask, 'in-progress', tagData, sortData);
+  const inProgress = getData(
+    state.allTask,
+    'in-progress',
+    tagData,
+    sortData,
+    searchItem
+  );
   return (
     <>
       <div class="flex-1 flex flex-col min-w-0 w-full">

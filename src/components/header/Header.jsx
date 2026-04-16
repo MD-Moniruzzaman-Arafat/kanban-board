@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import useModal from '../../hooks/useModal';
+import useSearch from '../../hooks/useSearch';
 
 export default function Header() {
   const { showModal, setShowModal } = useModal();
-  const [search, setSearch] = useState('');
+  const { searchItem, setSearchItem } = useSearch();
   return (
     <>
       <div class="bg-white border-b border-gray-200 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -31,8 +31,8 @@ export default function Header() {
               </svg>
               <input
                 name="search"
-                onChange={(e) => setSearch(e.target.value)}
-                value={search}
+                onChange={(e) => setSearchItem(e.target.value)}
+                value={searchItem}
                 type="search"
                 id="card-search"
                 placeholder="Search tasks"
